@@ -1,7 +1,9 @@
 package Model.ChessPieces;
 
-import javax.swing.text.Position;
-import java.util.List;
+import Model.HelperClasses.Position;
+import Model.Moves.IMove;
+
+import java.util.Collection;
 import java.util.Vector;
 
 public interface IChessPiece {
@@ -15,28 +17,22 @@ public interface IChessPiece {
 
     /**
      *
-     * @return the x-position of the piece
+     * @return the position of the piece
      */
-    int getX();
+    Position getPosition();
+
 
     /**
      *
-     * @return the y-position of the piece
+     * @param position the new position of the piece
      */
-    int getY();
+    void setPosition(Position position);
 
     /**
      *
-     * @param x the x-position of the piece
-     * @param y the y-position of the piece
+     * @return a list of moves for the piece
      */
-    void setPosition(int x, int y);
-
-    /**
-     *
-     * @return a list of vectors containing the possible moves for the piece
-     */
-    List<Vector<Integer>> getPossibleMoves();
+    Collection<IMove> getMoves();
 
 
     /**
