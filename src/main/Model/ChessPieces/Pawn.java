@@ -23,7 +23,7 @@ public class Pawn extends Piece {
     protected void calculateMoves(Square square, Board board) {
         int x = square.getPosition()[0];
         int y = square.getPosition()[1];
-        int direction = !isWhite() ? -1 : 1; // Black is on top => move down (-1 direction)
+        int direction = !isWhite() ? -1 : 1; // Black is on top => checkMoved down (-1 direction)
         if (isFirstMove){
             moves.add( createMove(x, y + 2 * direction));
         }
@@ -32,13 +32,13 @@ public class Pawn extends Piece {
         Move crossRight = createMove(x+1, y+direction);
 
         // Only add to list if in range of the board and if there's no piece in front
-        if (isLegalMove(forward) && !squareContainsPiece(board, forward)){
+        if (moveIsOnBoard(forward) && !squareContainsPiece(board, forward)){
             moves.add(forward);
         }
-        if (isLegalMove(crossLeft) && squareContainsOpponentPiece(board, crossLeft)){
+        if (moveIsOnBoard(crossLeft) && squareContainsOpponentPiece(board, crossLeft)){
             moves.add(crossLeft);
         }
-        if (isLegalMove(crossRight) && squareContainsOpponentPiece(board, crossRight)){
+        if (moveIsOnBoard(crossRight) && squareContainsOpponentPiece(board, crossRight)){
             moves.add(crossRight);
         }
 
@@ -47,19 +47,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected void move() {
+    protected void checkMoved() {
         isFirstMove = false;
     }
 
-    private boolean squareContainsPiece(Board board, Move move){
-        return board.containsPiece(move.getEndX(), move.getEndY());
-    }
 
-    private boolean squareContainsOpponentPiece(Board board, Move move){
-        int x = move.getEndX();
-        int y = move.getEndY();
-        return board.containsOpponentPiece(x, y, isWhite);
-    }
 
 
 

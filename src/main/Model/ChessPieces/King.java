@@ -20,21 +20,44 @@ public class King extends Piece{
         int x = square.getPosition()[0];
         int y = square.getPosition()[1];
         Move up = createMove(x, y+1);
-        if (isLegalMove(up)) moves.add(up);
+        addMoveIfLegal(board, up);
 
         Move down = createMove(x, y-1);
-        if (isLegalMove(down)) moves.add(down);
+        addMoveIfLegal(board, down);
 
         Move left = createMove(x-1, y);
-        if (isLegalMove(left)) moves.add(left);
+        addMoveIfLegal(board, left);
 
         Move right = createMove(x+1, y);
-        if (isLegalMove(right)) moves.add(right);
+        addMoveIfLegal(board, right);
+
+        Move crossUpperRight = createMove(x+1, y+1);
+        addMoveIfLegal(board, crossUpperRight);
+
+        Move crossUpperLeft = createMove(x-1, y+1);
+        addMoveIfLegal(board, crossUpperLeft);
+
+        Move crossLowerLeft = createMove(x-1, y-1);
+        addMoveIfLegal(board, crossLowerLeft);
+
+        Move crossLowerRight = createMove(x+1, y-1);
+        addMoveIfLegal(board, crossLowerRight);
 
     }
 
+    private void addMoveIfLegal(Board board, Move move){
+        if (moveIsOnBoard(move) && !squareContainsPiece(board, move)){
+            moves.add(move);
+        }
+        else if (moveIsOnBoard(move) && squareContainsOpponentPiece(board, move)){
+            moves.add(move);
+        }
+    }
+
+
+
     @Override
-    protected void move() {
+    protected void checkMoved() {
         isFirstMove = false;
     }
 

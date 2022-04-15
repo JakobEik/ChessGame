@@ -19,7 +19,7 @@ public interface ChessPiece {
      */
     Square getSquare();
 
-    void moveToSquare(Square square);
+    void move(Move move, Board board);
 
     /**
      * Gets all legal moves for this piece on a given board

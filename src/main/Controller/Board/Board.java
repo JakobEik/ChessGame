@@ -1,5 +1,6 @@
 package main.Controller.Board;
 
+import main.Model.Moves.Move;
 import main.Model.Square.Square;
 import main.Model.ChessPieces.*;
 
@@ -18,7 +19,6 @@ public class Board {
                 Square square = new Square(getIndex(x, y), position);
                 if (y == 0 || y == 1 || y == 6 || y == 7){
                     ChessPiece piece = createPiece(square);
-                    square.addChessPiece(piece);
                 }
                 squares.add(square);
             }
@@ -147,10 +147,10 @@ public class Board {
     /**
      * A function that moves the piece on the board
      * @param piece the chess piece to be moved
-     * @param square the square to move the piece to
+     * @param move the move to be made
      */
-    private void movePiece(ChessPiece piece, Square square) {
-        piece.moveToSquare(square);
+    private void movePiece(ChessPiece piece, Move move) {
+        piece.move(move, this);
     }
 
 

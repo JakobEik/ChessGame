@@ -19,7 +19,18 @@ public abstract class Piece implements ChessPiece {
         this.square = square;
         this.value = value;
         this.isWhite = isWhite;
+        this.square.addChessPiece(this);
     }
+
+    /**
+     * Used for the queen so it can contain a rook and bishop
+     */
+    public Piece(final int value, boolean isWhite) {
+        this.value = value;
+        this.isWhite = isWhite;
+    }
+
+
 
 
     @Override
@@ -35,10 +46,14 @@ public abstract class Piece implements ChessPiece {
     }
 
     @Override
-    public void moveToSquare(Square square){
-        this.square = square;
-        square.addChessPiece(this);
-        move();
+    public void move(Move move, Board board){
+        int x = move.getEndX();
+        int y = move.getEndY();
+
+        // Get the square at this location
+        this.square = board.getSquares().get(board.getIndex(x, y));
+        this.square.addChessPiece(this);
+        checkMoved();
 
     }
 
@@ -68,13 +83,13 @@ public abstract class Piece implements ChessPiece {
     /**
      * Used to tell a concrete piece that it has been moved
      */
-    protected abstract void move();
+    protected abstract void checkMoved();
 
     /**
-     * Simplifies creating a move by only needing to specify the end position
+     * Simplifies creating a checkMoved by only needing to specify the end position
      * @param endX The target x-position
      * @param endY The target y-position
-     * @return A move from the current position to a target position
+     * @return A checkMoved from the current position to a target position
      */
     protected Move createMove(int endX, int endY){
         int x = square.getPosition()[0];
@@ -83,13 +98,47 @@ public abstract class Piece implements ChessPiece {
     }
 
     /**
-     * Checks whether a move goes off the board or not
-     * @param move The move to check
-     * @return True if legal move, false if not
+     * Checks whether a checkMoved goes off the board or not
+     * @param move The checkMoved to check
+     * @return True if legal checkMoved, false if not
      */
-    protected boolean isLegalMove(Move move){
+    protected boolean moveIsOnBoard(Move move){
         int x = move.getEndX();
         int y = move.getEndY();
         return x <= 7 && x >= 0 && y <= 7 && y >= 0;
+    }
+
+    protected boolean squareContainsPiece(Board board, Move move){
+        return board.containsPiece(move.getEndX(), move.getEndY());
+    }
+
+    protected boolean squareContainsOpponentPiece(Board board, Move move){
+        int x = move.getEndX();
+        int y = move.getEndY();
+        return board.containsOpponentPiece(x, y, isWhite);
+    }
+
+
+
+    /**
+     * Recursive method for adding moves to the list of possible moves
+     * @param x The current x-position on the board
+     * @param y The current y-position on the board
+     * @param horizontalDir Which way to move in the horizontal direction: Either 1 or -1
+     * @param verticalDir Which way to move in the vertical direction: Either 1 or -1
+     * @param board The board
+     */
+    protected void addMovesInDirection(int x, int y, int horizontalDir, int verticalDir, Board board){
+        Move move = createMove(x, y);
+        if (moveIsOnBoard(move)){
+            if (!board.containsPiece(x, y)){
+                moves.add(move);
+                addMovesInDirection(x+horizontalDir, y+verticalDir, horizontalDir, verticalDir, board);
+            }
+            else if(squareContainsOpponentPiece(board, move)){
+                moves.add(move);
+            }
+        }
+
     }
 }

@@ -13,8 +13,9 @@ public class Queen extends Piece{
 
     public Queen(Square square, boolean isWhite) {
         super(square, value, isWhite);
-        rook = new Rook(square, isWhite);
-        bishop = new Bishop(square, isWhite);
+        rook = new Rook(isWhite);
+        square.removeChessPiece();
+        bishop = new Bishop(isWhite);
 
     }
 
@@ -29,7 +30,7 @@ public class Queen extends Piece{
     }
 
     @Override
-    protected void move() {
+    protected void checkMoved() {
         //Does nothing
     }
 
