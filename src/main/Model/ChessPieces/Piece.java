@@ -40,6 +40,9 @@ public abstract class Piece implements ChessPiece {
         return moves;
     }
 
+
+
+
     @Override
     public Square getSquare() {
         return square;
@@ -92,9 +95,7 @@ public abstract class Piece implements ChessPiece {
      * @return A checkMoved from the current position to a target position
      */
     protected Move createMove(int endX, int endY){
-        int x = square.getPosition()[0];
-        int y = square.getPosition()[1];
-        return new Move(x, y, endX, endY);
+        return new Move(endX, endY);
     }
 
     /**
@@ -140,5 +141,14 @@ public abstract class Piece implements ChessPiece {
             }
         }
 
+    }
+
+    protected void addMoveIfLegal(Board board, Move move){
+        if (moveIsOnBoard(move) && !squareContainsPiece(board, move)){
+            moves.add(move);
+        }
+        else if (moveIsOnBoard(move) && squareContainsOpponentPiece(board, move)){
+            moves.add(move);
+        }
     }
 }

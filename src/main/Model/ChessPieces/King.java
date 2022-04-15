@@ -45,14 +45,7 @@ public class King extends Piece{
 
     }
 
-    private void addMoveIfLegal(Board board, Move move){
-        if (moveIsOnBoard(move) && !squareContainsPiece(board, move)){
-            moves.add(move);
-        }
-        else if (moveIsOnBoard(move) && squareContainsOpponentPiece(board, move)){
-            moves.add(move);
-        }
-    }
+
 
 
 

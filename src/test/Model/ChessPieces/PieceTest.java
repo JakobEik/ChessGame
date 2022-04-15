@@ -34,7 +34,7 @@ class PieceTest {
     @Test
     void move() {
         Square square2 = board.getSquares().get(board.getIndex(3, 4));
-        Move move = new Move(2, 3, 3, 4);
+        Move move = new Move( 3, 4);
         pawn.move(move, board);
         assertEquals(square2, pawn.getSquare());
 

@@ -28,7 +28,6 @@ public interface ChessPiece {
      */
     Collection<Move> getMoves(Board board);
 
-
     /**
      *
      * @return true if the piece is white, false if the piece is black

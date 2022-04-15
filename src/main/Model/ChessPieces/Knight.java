@@ -16,28 +16,28 @@ public class Knight extends Piece{
         int y = square.getPosition()[1];
 
         Move oneUpTwoRight = createMove(x+2, y+1);
-        if (moveIsOnBoard(oneUpTwoRight)) moves.add(oneUpTwoRight);
+        addMoveIfLegal(board, oneUpTwoRight);
 
         Move twoUpOneRight = createMove(x+1, y+2);
-        if (moveIsOnBoard(twoUpOneRight)) moves.add(twoUpOneRight);
+        addMoveIfLegal(board, twoUpOneRight);
 
         Move twoUpOneLeft = createMove(x-1, y+2);
-        if (moveIsOnBoard(twoUpOneLeft)) moves.add(twoUpOneLeft);
+        addMoveIfLegal(board, twoUpOneLeft);
 
         Move oneUpTwoLeft = createMove(x-2, y+1);
-        if (moveIsOnBoard(oneUpTwoLeft)) moves.add(oneUpTwoLeft);
+        addMoveIfLegal(board, oneUpTwoLeft);
 
         Move oneDownTwoRight = createMove(x+2, y-1);
-        if (moveIsOnBoard(oneDownTwoRight)) moves.add(oneDownTwoRight);
+        addMoveIfLegal(board, oneDownTwoRight);
 
         Move twoDownOneRight = createMove(x+1, y-2);
-        if (moveIsOnBoard(twoDownOneRight)) moves.add(twoDownOneRight);
+        addMoveIfLegal(board, twoDownOneRight);
 
         Move twoDownOneLeft = createMove(x-1, y-2);
-        if (moveIsOnBoard(twoDownOneLeft)) moves.add(twoDownOneLeft);
+        addMoveIfLegal(board, twoDownOneLeft);
 
         Move oneDownTwoLeft = createMove(x-2, y-1);
-        if (moveIsOnBoard(oneDownTwoLeft)) moves.add(oneDownTwoLeft);
+        addMoveIfLegal(board, oneDownTwoLeft);
 
 
 

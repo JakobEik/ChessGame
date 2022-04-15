@@ -41,7 +41,7 @@ class PawnTest {
 
     @Test
     void testSecondMove(){
-        Move move = new Move(5, 0, 5, 1);
+        Move move = new Move( 5, 1);
         Square square = board.getSquares().get(board.getIndex(5, 0));
         Pawn pawn = new Pawn(square, true);
         pawn.move(move, board);
