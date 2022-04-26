@@ -25,7 +25,7 @@ class BishopTest {
         board.emptyBoard();
 
 
-        Square square1 = board.getSquares().get(board.getIndex(1, 1));
+        Square square1 = board.getSquare(1, 1);
         whiteBishop = new Bishop(square1, true);
 
 
@@ -33,10 +33,10 @@ class BishopTest {
 
     @Test
     void calculateMoves() {
-        Square square2 = board.getSquares().get(board.getIndex(5, 5));
+        Square square2 = board.getSquare(5, 5);
         ChessPiece blackPawn = new Pawn(square2, false);
 
-        Square square3 = board.getSquares().get(board.getIndex(0, 2));
+        Square square3 = board.getSquare(0, 2);
         ChessPiece whitePawn = new Pawn(square3, true);
 
         Collection<Move> moves =  whiteBishop.getMoves(board);
@@ -49,9 +49,6 @@ class BishopTest {
                 new int[]{5, 5} // can take black pawn
         );
 
-        for (Move move: moves) {
-            System.out.println(move.getEndX() + "," + move.getEndY());
-        }
 
         HelperTestMethods.sameAmountOfMoves(moves, legalMovesWhiteBishop);
 

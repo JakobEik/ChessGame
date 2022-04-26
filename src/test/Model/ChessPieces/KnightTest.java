@@ -22,7 +22,7 @@ class KnightTest {
         board = new Board();
         board.emptyBoard();
 
-        Square square = board.getSquares().get(board.getIndex(2, 1));
+        Square square = board.getSquare(2, 1);
         whiteKnight = new Knight(square, true);
 
 
@@ -32,10 +32,10 @@ class KnightTest {
 
     @Test
     void calculateMoves() {
-        Square square = board.getSquares().get(board.getIndex(0, 0));
+        Square square = board.getSquare(0, 0);
         ChessPiece blackPawn = new Pawn(square, false);
 
-        Square square2 = board.getSquares().get(board.getIndex(4, 0));
+        Square square2 = board.getSquare(4, 0);
         ChessPiece whitePawn = new Pawn(square2, true);
 
         List<int[]> legalMoves = List.of(

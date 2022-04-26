@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 
 
     @Override
-    protected void calculateMoves(Square square, Board board) {
+    protected void calculateMoves(Board board) {
         int x = square.getPosition()[0];
         int y = square.getPosition()[1];
         int direction = !isWhite() ? -1 : 1; // Black is on top => checkMoved down (-1 direction)

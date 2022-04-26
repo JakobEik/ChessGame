@@ -1,20 +1,32 @@
 package main.Model.Moves;
 
 
+import java.util.Arrays;
+
 public class Move {
 
-    private final int endX, endY;
+    private final int[] endPosition;
 
     public Move(int endX, int endY) {
-        this.endX = endX;
-        this.endY = endY;
+        endPosition = new int[]{endX, endY};
     }
 
-    public int getEndX() {
-        return endX;
+    /**
+     * Gets the end position for this move.
+     *
+     * <p>x = getEndPosition()[0]</p>
+     * <p>y = getEndPosition()[1]</p>
+     *
+     * @return Array of integers
+     */
+    public int[] getEndPosition() {
+        return endPosition;
     }
 
-    public int getEndY() {
-        return endY;
+    @Override
+    public String toString() {
+        return "Move{" +
+                "endPosition=" + Arrays.toString(endPosition) +
+                '}';
     }
 }

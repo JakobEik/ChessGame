@@ -36,11 +36,16 @@ public abstract class Piece implements ChessPiece {
     @Override
     public Collection<Move> getMoves(Board board) {
         moves.clear();
-        calculateMoves(square, board);
+        calculateMoves(board);
         return moves;
     }
 
 
+
+    @Override
+    public boolean isLegalMove(Move move){
+        return moves.contains(move);
+    }
 
 
     @Override
@@ -49,13 +54,9 @@ public abstract class Piece implements ChessPiece {
     }
 
     @Override
-    public void move(Move move, Board board){
-        int x = move.getEndX();
-        int y = move.getEndY();
-
-        // Get the square at this location
-        this.square = board.getSquares().get(board.getIndex(x, y));
-        this.square.addChessPiece(this);
+    public void move(Square square){
+        this.square = square;
+        square.addChessPiece(this);
         checkMoved();
 
     }
@@ -78,10 +79,10 @@ public abstract class Piece implements ChessPiece {
     }
 
     /**
-     * Calculates the moves for a piece given a square on the board
-     * @param square The square
+     * Calculates the moves for a piece on a given board
+     * @param board The board
      */
-    protected abstract void calculateMoves(Square square, Board board);
+    protected abstract void calculateMoves(Board board);
 
     /**
      * Used to tell a concrete piece that it has been moved
@@ -104,19 +105,17 @@ public abstract class Piece implements ChessPiece {
      * @return True if legal checkMoved, false if not
      */
     protected boolean moveIsOnBoard(Move move){
-        int x = move.getEndX();
-        int y = move.getEndY();
+        int x = move.getEndPosition()[0];
+        int y = move.getEndPosition()[1];
         return x <= 7 && x >= 0 && y <= 7 && y >= 0;
     }
 
     protected boolean squareContainsPiece(Board board, Move move){
-        return board.containsPiece(move.getEndX(), move.getEndY());
+        return board.containsPiece(move.getEndPosition());
     }
 
     protected boolean squareContainsOpponentPiece(Board board, Move move){
-        int x = move.getEndX();
-        int y = move.getEndY();
-        return board.containsOpponentPiece(x, y, isWhite);
+        return board.containsOpponentPiece(move.getEndPosition(), isWhite);
     }
 
 
@@ -125,22 +124,29 @@ public abstract class Piece implements ChessPiece {
      * Recursive method for adding moves to the list of possible moves
      * @param x The current x-position on the board
      * @param y The current y-position on the board
-     * @param horizontalDir Which way to move in the horizontal direction: Either 1 or -1
-     * @param verticalDir Which way to move in the vertical direction: Either 1 or -1
+     * @param x_dir Which way to move in the horizontal direction: Either 1 or -1
+     * @param y_dir Which way to move in the vertical direction: Either 1 or -1
      * @param board The board
      */
-    protected void addMovesInDirection(int x, int y, int horizontalDir, int verticalDir, Board board){
+    protected void addMovesInDirection(int x, int y, int x_dir, int y_dir, Board board){
         Move move = createMove(x, y);
         if (moveIsOnBoard(move)){
-            if (!board.containsPiece(x, y)){
+            if (!board.containsPiece(move.getEndPosition())){
                 moves.add(move);
-                addMovesInDirection(x+horizontalDir, y+verticalDir, horizontalDir, verticalDir, board);
+                addMovesInDirection(x+x_dir, y+y_dir, x_dir, y_dir, board);
             }
             else if(squareContainsOpponentPiece(board, move)){
                 moves.add(move);
             }
         }
 
+    }
+
+    protected void addMove(int x_dir, int y_dir, Board board){
+        int x = square.getPosition()[0];
+        int y = square.getPosition()[1];
+        Move move = createMove(x+x_dir, y+y_dir);
+        addMoveIfLegal(board, move);
     }
 
     protected void addMoveIfLegal(Board board, Move move){

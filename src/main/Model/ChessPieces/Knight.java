@@ -11,39 +11,31 @@ public class Knight extends Piece{
     }
 
     @Override
-    protected void calculateMoves(Square square, Board board) {
-        int x = square.getPosition()[0];
-        int y = square.getPosition()[1];
+    protected void calculateMoves(Board board) {
 
-        Move oneUpTwoRight = createMove(x+2, y+1);
-        addMoveIfLegal(board, oneUpTwoRight);
-
-        Move twoUpOneRight = createMove(x+1, y+2);
-        addMoveIfLegal(board, twoUpOneRight);
-
-        Move twoUpOneLeft = createMove(x-1, y+2);
-        addMoveIfLegal(board, twoUpOneLeft);
-
-        Move oneUpTwoLeft = createMove(x-2, y+1);
-        addMoveIfLegal(board, oneUpTwoLeft);
-
-        Move oneDownTwoRight = createMove(x+2, y-1);
-        addMoveIfLegal(board, oneDownTwoRight);
-
-        Move twoDownOneRight = createMove(x+1, y-2);
-        addMoveIfLegal(board, twoDownOneRight);
-
-        Move twoDownOneLeft = createMove(x-1, y-2);
-        addMoveIfLegal(board, twoDownOneLeft);
-
-        Move oneDownTwoLeft = createMove(x-2, y-1);
-        addMoveIfLegal(board, oneDownTwoLeft);
+        // One Up Two Right
+        addMove(2, 1, board);
+        // Two Up One Right
+        addMove(1, 2, board);
+        // Two Up One Left
+        addMove(-1, 2, board);
+        // One Up Two Left
+        addMove(-2, 1, board);
+        // One Down Two Right
+        addMove(2, -1, board);
+        // Two Down One Right
+        addMove(1, -2, board);
+        // Two Down One Left
+        addMove(-1, -2, board);
+        // One Down Two Left
+        addMove(-2, -1, board);
 
 
 
 
 
     }
+
 
     @Override
     protected void checkMoved() {

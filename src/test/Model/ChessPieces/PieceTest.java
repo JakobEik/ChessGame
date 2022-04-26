@@ -19,7 +19,7 @@ class PieceTest {
     void setUp() {
         board.emptyBoard();
 
-        square = board.getSquares().get(board.getIndex(2, 3));
+        square = board.getSquare(2, 3);
         pawn = new Pawn(square, true);
 
 
@@ -33,10 +33,9 @@ class PieceTest {
 
     @Test
     void move() {
-        Square square2 = board.getSquares().get(board.getIndex(3, 4));
-        Move move = new Move( 3, 4);
-        pawn.move(move, board);
-        assertEquals(square2, pawn.getSquare());
+        Square square = board.getSquare(3, 4);
+        pawn.move(square);
+        assertEquals(square, pawn.getSquare());
 
     }
 

@@ -23,17 +23,17 @@ class QueenTest {
         board = new Board();
         board.emptyBoard();
 
-        Square square = board.getSquares().get(board.getIndex(1, 1));
+        Square square = board.getSquare(1, 1);
         whiteQueen = new Queen(square, true);
 
 
     }
     @Test
     void calculateMoves() {
-        Square square = board.getSquares().get(board.getIndex(2, 1));
+        Square square = board.getSquare(2, 1);
         ChessPiece blackPawn = new Pawn(square, false);
 
-        Square square2 = board.getSquares().get(board.getIndex(2, 2));
+        Square square2 = board.getSquare(2, 2);
         ChessPiece whitePawn = new Pawn(square2, true);
 
         List<int[]> legalMoves = List.of(

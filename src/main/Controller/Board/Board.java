@@ -5,6 +5,8 @@ import main.Model.Square.Square;
 import main.Model.ChessPieces.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class Board {
@@ -33,14 +35,59 @@ public class Board {
         }
     }
 
+
+
+    public List<Square> getSquares() {
+        return squares;
+    }
+
+    public Square getSquare(int x, int y){
+        return getSquares().get(getIndex(x, y));
+    }
+
+    public boolean containsPiece(int[] position){
+        int x = position[0];
+        int y = position[1];
+        return squares.get(getIndex(x, y)).containsPiece();
+    }
+
+    public boolean containsOpponentPiece(int[] position, boolean isWhite){
+        int x = position[0];
+        int y = position[1];
+        Square square = squares.get(getIndex(x, y));
+        return square.containsPiece() && square.getPiece().isWhite() != isWhite;
+    }
+
+    /**
+     * A function that moves the piece on the board
+     * @param piece the chess piece to be moved
+     * @param move the move to be made
+     */
+    public void movePiece(ChessPiece piece, Move move) {
+        if(piece.isLegalMove(move)){
+            int x = move.getEndPosition()[0];
+            int y = move.getEndPosition()[1];
+
+            Square square = getSquare(x, y);
+            piece.move(square);
+        }
+
+        else{
+            throw new IllegalArgumentException("Illegal move:" + move.toString());
+        }
+
+    }
+
+
+
     /**
      * Calculates the index from 0-63 from a position
      * @param x The x-position
      * @param y The y-position
      * @return The index
      */
-    public int getIndex(int x, int y){
-        return (y - 1) * 8 + x + 8;
+    private int getIndex(int x, int y){
+        return y * 8 + x;
     }
 
     /**
@@ -48,24 +95,11 @@ public class Board {
      * @param index The index
      * @return The position as an array
      */
-    public int[] getPositionFromIndex(int index){
+    private int[] getPositionFromIndex(int index){
         int x = index % 8;
         int y = index / 8;
         return new int[]{x, y};
 
-    }
-
-    public List<Square> getSquares() {
-        return squares;
-    }
-
-    public boolean containsPiece(int x, int y){
-        return squares.get(getIndex(x, y)).containsPiece();
-    }
-
-    public boolean containsOpponentPiece(int x, int y, boolean isWhite){
-        Square square = squares.get(getIndex(x, y));
-        return square.containsPiece() && square.getPiece().isWhite() != isWhite;
     }
 
 
@@ -143,15 +177,6 @@ public class Board {
 
 
 
-
-    /**
-     * A function that moves the piece on the board
-     * @param piece the chess piece to be moved
-     * @param move the move to be made
-     */
-    private void movePiece(ChessPiece piece, Move move) {
-        piece.move(move, this);
-    }
 
 
 }

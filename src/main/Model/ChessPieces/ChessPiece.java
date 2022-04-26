@@ -19,7 +19,7 @@ public interface ChessPiece {
      */
     Square getSquare();
 
-    void move(Move move, Board board);
+    void move(Square square);
 
     /**
      * Gets all legal moves for this piece on a given board
@@ -33,6 +33,13 @@ public interface ChessPiece {
      * @return true if the piece is white, false if the piece is black
      */
     boolean isWhite();
+
+    /**
+     * Checks if a move is legal
+     * @param move The move
+     * @return True if legal, false if not
+     */
+    boolean isLegalMove(Move move);
 
     /**
      * removes the piece from the board

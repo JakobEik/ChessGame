@@ -2,6 +2,8 @@ package main.Model.Square;
 
 import main.Model.ChessPieces.ChessPiece;
 
+import java.util.Arrays;
+
 public class Square {
 
     private final int ID;
@@ -49,21 +51,21 @@ public class Square {
         containsPiece = true; // The square is now occupied
     }
 
-    public ChessPiece removeChessPiece(){
+    public void removeChessPiece(){
         if (piece == null){
             throw new IllegalStateException("Cant remove piece from a square without a piece");
         }
         containsPiece = false; // Square is no longer occupied
         ChessPiece chessPiece = piece; // Copies the piece so it can be set to null
         piece = null; // The square no longer contains a piece
-        return chessPiece;
 
     }
 
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Square{" +
+                "position=" + Arrays.toString(position) +
+                '}';
+    }
 }

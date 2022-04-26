@@ -12,7 +12,7 @@ public class HelperTestMethods {
     public static void containsLegalMoves(Collection<Move> moves, List<int[]> legalMoves){
 
         for (Move move: moves) {
-            int[] pieceMove = new int[]{move.getEndX(), move.getEndY()};
+            int[] pieceMove = new int[]{move.getEndPosition()[0], move.getEndPosition()[1]};
             assertTrue(legalMoves.
                     stream()
                     .anyMatch(legalMove -> Arrays.equals(legalMove, pieceMove)),

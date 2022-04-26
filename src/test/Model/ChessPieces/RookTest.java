@@ -22,7 +22,7 @@ class RookTest {
         board = new Board();
         board.emptyBoard();
 
-        Square square = board.getSquares().get(board.getIndex(2, 1));
+        Square square = board.getSquare(2, 1);
         whiteRook = new Rook(square, true);
 
 
@@ -31,10 +31,10 @@ class RookTest {
 
     @Test
     void calculateMoves() {
-        Square square = board.getSquares().get(board.getIndex(1, 1));
+        Square square = board.getSquare(1, 1);
         ChessPiece blackPawn = new Pawn(square, false);
 
-        Square square2 = board.getSquares().get(board.getIndex(3, 1));
+        Square square2 = board.getSquare(3, 1);
         ChessPiece whitePawn = new Pawn(square2, true);
 
         List<int[]> legalMoves = List.of(

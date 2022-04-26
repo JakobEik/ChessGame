@@ -18,19 +18,16 @@ public class Rook extends Piece{
     }
 
     @Override
-    protected void calculateMoves(Square square, Board board) {
+    protected void calculateMoves(Board board) {
         int x = square.getPosition()[0];
         int y = square.getPosition()[1];
 
         // Right
         addMovesInDirection(x+1, y, 1, 0, board);
-
         // left
         addMovesInDirection(x-1, y, -1, 0, board);
-
         // Up
         addMovesInDirection(x, y+1, 0, 1, board);
-
         // Down
         addMovesInDirection(x, y-1, 0, -1, board);
 

@@ -1,6 +1,7 @@
 package test.Model.ChessPieces;
 
 import main.Controller.Board.Board;
+import main.Model.ChessPieces.ChessPiece;
 import main.Model.ChessPieces.Pawn;
 import main.Model.Moves.Move;
 import main.Model.Square.Square;
@@ -25,8 +26,8 @@ class PawnTest {
 
     @Test
     void testFirstMove() {
-        Square square = board.getSquares().get(board.getIndex(1, 1));
-        Pawn whitePawn = new Pawn(square, true);
+        Square square = board.getSquare(1, 1);
+        ChessPiece whitePawn = new Pawn(square, true);
 
         List<int[]> legalMovesWhitePawn = List.of(
                 new int[]{1, 2}, // One forward
@@ -37,22 +38,59 @@ class PawnTest {
 
         HelperTestMethods.sameAmountOfMoves(moves, legalMovesWhitePawn);
         HelperTestMethods.containsLegalMoves(moves, legalMovesWhitePawn);
+
+        Square square1 = board.getSquare(2, 2);
+        ChessPiece blackPawn1 = new Pawn(square1, false);
+
+        Square square2 = board.getSquare(0, 2);
+        ChessPiece blackPawn2 = new Pawn(square2, false);
+
+        legalMovesWhitePawn = List.of(
+                new int[]{1, 2},  // One forward
+                new int[]{1, 3},  // Two forward
+                new int[]{0, 2},  // Take black pawn
+                new int[]{2, 2}   // Take black pawn
+        );
+
+        moves =  whitePawn.getMoves(board);
+        HelperTestMethods.sameAmountOfMoves(moves, legalMovesWhitePawn);
+        HelperTestMethods.containsLegalMoves(moves, legalMovesWhitePawn);
+
     }
 
     @Test
     void testSecondMove(){
-        Move move = new Move( 5, 1);
-        Square square = board.getSquares().get(board.getIndex(5, 0));
-        Pawn pawn = new Pawn(square, true);
-        pawn.move(move, board);
+        Square square = board.getSquare(1, 0);
+        ChessPiece whitePawn = new Pawn(square, true);
+        Square targetSquare = board.getSquare(1,1);
+        whitePawn.move(targetSquare);
 
-        Collection<Move> moves =  pawn.getMoves(board);
+        Collection<Move> moves =  whitePawn.getMoves(board);
 
         assertEquals(1, moves.size());
 
         Move testMove = moves.iterator().next();
-        assertEquals(testMove.getEndX(), 5);
-        assertEquals(testMove.getEndY(), 2);
+
+
+        assertEquals(1, testMove.getEndPosition()[0]);
+        assertEquals(2, testMove.getEndPosition()[1]);
+
+        Square square1 = board.getSquare(2, 2);
+        ChessPiece blackPawn1 = new Pawn(square1, false);
+
+        Square square2 = board.getSquare(0, 2);
+        ChessPiece blackPawn2 = new Pawn(square2, false);
+
+        List<int[]> legalMovesWhitePawn = List.of(
+                new int[]{1, 2},  // One forward
+                new int[]{0, 2},  // Take black pawn
+                new int[]{2, 2}   // Take black pawn
+        );
+
+        moves =  whitePawn.getMoves(board);
+        HelperTestMethods.sameAmountOfMoves(moves, legalMovesWhitePawn);
+        HelperTestMethods.containsLegalMoves(moves, legalMovesWhitePawn);
+
     }
 }
 

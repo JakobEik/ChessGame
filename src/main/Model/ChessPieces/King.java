@@ -16,32 +16,23 @@ public class King extends Piece{
     }
 
     @Override
-    protected void calculateMoves(Square square, Board board) {
-        int x = square.getPosition()[0];
-        int y = square.getPosition()[1];
-        Move up = createMove(x, y+1);
-        addMoveIfLegal(board, up);
-
-        Move down = createMove(x, y-1);
-        addMoveIfLegal(board, down);
-
-        Move left = createMove(x-1, y);
-        addMoveIfLegal(board, left);
-
-        Move right = createMove(x+1, y);
-        addMoveIfLegal(board, right);
-
-        Move crossUpperRight = createMove(x+1, y+1);
-        addMoveIfLegal(board, crossUpperRight);
-
-        Move crossUpperLeft = createMove(x-1, y+1);
-        addMoveIfLegal(board, crossUpperLeft);
-
-        Move crossLowerLeft = createMove(x-1, y-1);
-        addMoveIfLegal(board, crossLowerLeft);
-
-        Move crossLowerRight = createMove(x+1, y-1);
-        addMoveIfLegal(board, crossLowerRight);
+    protected void calculateMoves(Board board) {
+        // Up
+        addMove(0, 1, board);
+        // Down
+        addMove(0, -1, board);
+        // Left
+        addMove(-1, 0, board);
+        // Right
+        addMove(1, 0, board);
+        // Cross upper right
+        addMove(1, 1, board);
+        // Cross upper left
+        addMove(-1, 1, board);
+        // Cross lower left
+        addMove(-1, -1, board);
+        // Cross lower right
+        addMove(+1, -1, board);
 
     }
 

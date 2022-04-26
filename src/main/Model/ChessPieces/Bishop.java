@@ -2,7 +2,6 @@ package main.Model.ChessPieces;
 
 import main.Controller.Board.Board;
 import main.Model.Square.Square;
-import main.Model.Moves.Move;
 
 
 public class Bishop extends Piece{
@@ -20,7 +19,7 @@ public class Bishop extends Piece{
 
 
     @Override
-    protected void calculateMoves(Square square, Board board) {
+    protected void calculateMoves(Board board) {
         int x = square.getPosition()[0];
         int y = square.getPosition()[1];
 
@@ -41,13 +40,7 @@ public class Bishop extends Piece{
 
     }
 
-    /**
-     * Helper method for the addMovesInDirection method
-     */
-    private void addMove(int x, int y){
-        Move move = createMove(x, y);
-        if (moveIsOnBoard(move)) moves.add(move);
-    }
+
 
 
 
