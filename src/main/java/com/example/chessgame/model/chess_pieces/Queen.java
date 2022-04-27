@@ -1,7 +1,7 @@
 package com.example.chessgame.model.chess_pieces;
 
 
-import com.example.chessgame.controller.boards.Board;
+import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.square.Square;
 
 public class Queen extends Piece{

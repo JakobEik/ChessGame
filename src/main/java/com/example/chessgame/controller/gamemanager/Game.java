@@ -1,6 +1,6 @@
 package com.example.chessgame.controller.gamemanager;
 
-import com.example.chessgame.controller.boards.Board;
+import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.square.Square;
 
 import java.util.Arrays;

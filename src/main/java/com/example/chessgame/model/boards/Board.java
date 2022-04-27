@@ -1,4 +1,4 @@
-package com.example.chessgame.controller.boards;
+package com.example.chessgame.model.boards;
 
 
 import com.example.chessgame.model.chess_pieces.*;
@@ -69,8 +69,6 @@ public class Board {
 
             Square square = getSquare(x, y);
             piece.move(square);
-        } else {
-            throw new IllegalArgumentException("Illegal move:" + move.toString());
         }
 
     }

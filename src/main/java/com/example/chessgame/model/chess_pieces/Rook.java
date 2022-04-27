@@ -1,7 +1,7 @@
 package com.example.chessgame.model.chess_pieces;
 
 
-import com.example.chessgame.controller.boards.Board;
+import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.square.Square;
 
 public class Rook extends Piece{
@@ -12,10 +12,7 @@ public class Rook extends Piece{
         isFirstMove = true;
     }
 
-    public Rook(boolean isWhite) {
-        super(value, isWhite);
-        isFirstMove = true;
-    }
+
 
     @Override
     protected void calculateMoves(Board board) {

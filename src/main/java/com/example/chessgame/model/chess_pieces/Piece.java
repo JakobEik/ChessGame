@@ -1,6 +1,6 @@
 package com.example.chessgame.model.chess_pieces;
 
-import com.example.chessgame.controller.boards.Board;
+import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 
@@ -22,13 +22,6 @@ public abstract class Piece implements ChessPiece {
         this.square.addChessPiece(this);
     }
 
-    /**
-     * Used for the queen so it can contain a rook and bishop
-     */
-    public Piece(final int value, boolean isWhite) {
-        this.value = value;
-        this.isWhite = isWhite;
-    }
 
 
 
@@ -75,7 +68,7 @@ public abstract class Piece implements ChessPiece {
 
     @Override
     public void kill() {
-        //TODO: Implement method
+        square = null;
     }
 
     /**
@@ -142,6 +135,12 @@ public abstract class Piece implements ChessPiece {
 
     }
 
+    /**
+     * Creates and adds a move to the list of moves for this piece if the move is a valid one
+     * @param x_dir The move in the x-direction
+     * @param y_dir The move in the y-direction
+     * @param board The Board
+     */
     protected void addMove(int x_dir, int y_dir, Board board){
         int x = square.getPosition()[0];
         int y = square.getPosition()[1];
@@ -149,6 +148,11 @@ public abstract class Piece implements ChessPiece {
         addMoveIfLegal(board, move);
     }
 
+    /**
+     * Checks if a move is legal for this piece
+     * @param board The Board
+     * @param move The move
+     */
     protected void addMoveIfLegal(Board board, Move move){
         if (moveIsOnBoard(move) && !squareContainsPiece(board, move)){
             moves.add(move);

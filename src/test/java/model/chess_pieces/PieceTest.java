@@ -1,6 +1,6 @@
 package model.chess_pieces;
 
-import com.example.chessgame.controller.boards.Board;
+import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.Pawn;
 import com.example.chessgame.model.chess_pieces.Piece;
 import com.example.chessgame.model.square.Square;
