@@ -6,6 +6,7 @@ import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface ChessPiece {
 
@@ -14,6 +15,8 @@ public interface ChessPiece {
      * Use for the AI to check how important a piece is
      */
     int getValue();
+
+    int getStartX();
 
     /**
      * @return The square the piece is on
@@ -24,10 +27,11 @@ public interface ChessPiece {
 
     /**
      * Gets all legal moves for this piece on a given board
+     *
      * @param board The board
      * @return a list of moves for the piece
      */
-    Collection<Move> getMoves(Board board);
+    List<Move> getMoves(Board board);
 
     /**
      *

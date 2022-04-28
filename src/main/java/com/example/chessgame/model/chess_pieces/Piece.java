@@ -6,13 +6,16 @@ import com.example.chessgame.model.square.Square;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public abstract class Piece implements ChessPiece {
 
     protected Square square;
-    protected final static Collection<Move> moves = new ArrayList<>();
+    protected final static List<Move> moves = new ArrayList<>();
     protected final boolean isWhite;
     private final int value;
+
+    private final int startX;
 
 
     public Piece(Square square, final int value, boolean isWhite) {
@@ -20,14 +23,16 @@ public abstract class Piece implements ChessPiece {
         this.value = value;
         this.isWhite = isWhite;
         this.square.addChessPiece(this);
+        startX = square.getPosition()[0];
     }
 
 
-
-
+    public int getStartX(){
+        return startX;
+    }
 
     @Override
-    public Collection<Move> getMoves(Board board) {
+    public List<Move> getMoves(Board board) {
         moves.clear();
         calculateMoves(board);
         return moves;
@@ -89,6 +94,7 @@ public abstract class Piece implements ChessPiece {
      * @return A checkMoved from the current position to a target position
      */
     protected Move createMove(int endX, int endY){
+
         return new Move(endX, endY);
     }
 
@@ -161,4 +167,7 @@ public abstract class Piece implements ChessPiece {
             moves.add(move);
         }
     }
+
+
+
 }

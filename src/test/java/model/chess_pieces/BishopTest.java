@@ -34,6 +34,8 @@ class BishopTest {
         Square square2 = board.getSquare(5, 5);
         ChessPiece blackPawn = new Pawn(square2, false);
 
+
+
         Square square3 = board.getSquare(0, 2);
         ChessPiece whitePawn = new Pawn(square3, true);
 

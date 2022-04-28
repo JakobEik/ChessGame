@@ -11,6 +11,7 @@ import java.util.List;
 public class Board {
 
     private final List<Square> squares = new ArrayList<>();
+    private final List<ChessPiece> pieces = new ArrayList<>();
 
 
     public Board() {
@@ -20,6 +21,7 @@ public class Board {
                 Square square = new Square(getIndex(x, y), position);
                 if (y == 0 || y == 1 || y == 6 || y == 7) {
                     ChessPiece piece = createPiece(square);
+                    pieces.add(piece);
                 }
                 squares.add(square);
             }
@@ -37,6 +39,11 @@ public class Board {
 
     public List<Square> getSquares() {
         return squares;
+    }
+
+
+    public List<ChessPiece> getPieces() {
+        return pieces;
     }
 
     public Square getSquare(int x, int y) {
