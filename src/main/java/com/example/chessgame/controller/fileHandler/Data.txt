@@ -1,0 +1,12 @@
+BLACK WIN, Name: First Winner
+WHITE WIN, Name: Second Winner
+WHITE WIN, Name: Foo
+BLACK WIN, Name: Foo
+WHITE WIN, Name: Foo
+BLACK WIN, Name: Foo
+WHITE WIN, Name: Foo
+WHITE WIN, Name: Foo
+BLACK WIN, Name: Foo
+WHITE WIN, Name: Foo
+BLACK WIN, Name: Foo
+WHITE WIN, Name: Bar
