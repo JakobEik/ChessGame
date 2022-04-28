@@ -8,11 +8,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AppController {
 
@@ -62,31 +62,59 @@ public class AppController {
     @FXML private Button moveBtn;
 
     BoardController boardController;
-    List<Region> regionsSelected = new ArrayList<>();
+    Map<Region, Move> regionsSelected = new HashMap<>();
+    Button pieceSelected = null;
 
     public AppController() {
         this.boardController = new BoardController();
     }
 
+    public void onRegionClick(MouseEvent event){
+        Region region = (Region) event.getSource();
+        if (regionsSelected.containsKey(region)){
+            movePiece(region);
+        }
+    }
+
+
     public void onPieceClick(ActionEvent event){
-        regionsSelected.forEach(this::removeCellAsPossibleMove);
-        regionsSelected.clear();
+        String playerTurn = boardController.isWhiteTurn() ? "white" : "black";
 
         Button button = (Button) event.getSource();
-        //movesAvailable.setText(boardController.getPieceMoves(button.getId()));
-        List<Move> moves =  boardController.getPieceMoves(button.getId());
-        //int x = GridPane.getColumnIndex(button);
-        //int y = GridPane.getRowIndex(button);
-        //List<Node> nodes = getCell(x, y);
-        //gridPane.add(button, 3, 4);
-       for (Move move : moves) {
-            final int x = move.getEndPosition()[0];
-            final int y = move.getEndPosition()[1];
-            regionsSelected.add(getRegion(x, y));
+        if (button.getId().contains(playerTurn)){
+            pieceSelected = button;
+            regionsSelected.keySet().forEach(this::removeCellAsPossibleMove);
+            regionsSelected.clear();
+
+            List<Move> moves =  boardController.getPieceMoves(button.getId());
+
+           for (Move move : moves) {
+                final int x = move.getEndPosition()[0];
+                final int y = move.getEndPosition()[1];
+                regionsSelected.put(getRegion(x, y), move);
+            }
+
+            regionsSelected.keySet().forEach(this::setRegionAsPossibleMove);
+
         }
 
-        regionsSelected.forEach(this::setRegionAsPossibleMove);
+    }
 
+    private void killPiece(Region region){
+        Button piece = getPiece(region);
+        piece.setVisible(false);
+    }
+
+    private void movePiece(Region region){
+        int[] regPos = getNodeGridPosition(region);
+        if (hasPiece(region)){
+            killPiece(region);
+        }
+        boardController.movePiece(pieceSelected.getId(), regionsSelected.get(region));
+        gridPane.add(pieceSelected, regPos[0], regPos[1]);
+        regionsSelected.keySet().forEach(this::removeCellAsPossibleMove);
+        regionsSelected.clear();
+        pieceSelected = null;
     }
 
 
@@ -97,8 +125,11 @@ public class AppController {
     private void removeCellAsPossibleMove(Region region){
         setBorderWidth(region, 0);
     }
+
+
     private void setBorderWidth(Region region, int width){
         String styleCSS = region.getStyle();
+        // width is the second to last char in the string => length-2
         String newStyle = styleCSS.substring(0, styleCSS.length() - 2) + width +";";
         region.setStyle(newStyle);
     }
@@ -109,6 +140,17 @@ public class AppController {
         return (Button) sortedCell[1];
     }
 
+    private Button getPiece(Region region){
+        int[] regPos = getNodeGridPosition(region);
+        return getPiece(regPos[0], regPos[1]);
+    }
+
+    private boolean hasPiece(Region region){
+        int[] regPos = getNodeGridPosition(region);
+        Button piece = getPiece(regPos[0], regPos[1]);
+        return piece != null;
+    }
+
     private Region getRegion(int x, int y){
         List<Node> nodes = getCell(x, y);
         Node[] sortedCell = sortCell(nodes);
@@ -117,8 +159,8 @@ public class AppController {
 
 
     private int[] getNodeGridPosition(Node node){
-        int x = GridPane.getColumnIndex(node.getParent()); // Get parent because node is inside an anchorpane
-        int y = GridPane.getRowIndex(node.getParent());
+        int x = GridPane.getColumnIndex(node);
+        int y = GridPane.getRowIndex(node);
         return new int[]{x, y};
     }
 

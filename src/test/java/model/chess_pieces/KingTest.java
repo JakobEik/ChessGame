@@ -52,6 +52,21 @@ class KingTest {
         HelperTestMethods.sameAmountOfMoves(moves, legalMovesWhiteKing);
         HelperTestMethods.containsLegalMoves(moves, legalMovesWhiteKing);
 
+        whiteKing.move(board.getSquare(1, 0));
+        moves =  whiteKing.getMoves(board);
+        legalMovesWhiteKing = List.of(
+                new int[]{0, 0},
+                new int[]{0, 1},
+                new int[]{1, 1},
+                new int[]{2, 1},
+                new int[]{2, 0}
+        );
+
+        HelperTestMethods.sameAmountOfMoves(moves, legalMovesWhiteKing);
+        HelperTestMethods.containsLegalMoves(moves, legalMovesWhiteKing);
+
+
+
 
     }
 }

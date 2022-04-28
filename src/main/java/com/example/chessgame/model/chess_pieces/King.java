@@ -1,17 +1,25 @@
 package com.example.chessgame.model.chess_pieces;
 
 
+import com.example.chessgame.controller.gamemanager.GameState;
+import com.example.chessgame.controller.gamemanager.Observer;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.square.Square;
 
-public class King extends Piece{
+import java.util.ArrayList;
+import java.util.List;
+
+public class King extends Piece implements Observable{
 
     private static final int value = 10000000;
     private boolean isFirstMove;
+    private List<Observer> observers;
 
-    public King(Square square, boolean isWhite) {
+    public King(Square square, boolean isWhite, Observer observer) {
         super(square, value, isWhite);
         isFirstMove = true;
+        observers = new ArrayList<>();
+        observers.add(observer);
     }
 
     @Override
@@ -37,6 +45,11 @@ public class King extends Piece{
 
 
 
+    @Override
+    public void die(){
+
+    }
+
 
 
     @Override
@@ -45,4 +58,10 @@ public class King extends Piece{
     }
 
 
+
+    @Override
+    public void notifyObservers() {
+        GameState gameState = isWhite ? GameState.WHITE_WIN : GameState.BLACK_WIN;
+        observers.forEach(observer -> observer.update(gameState));
+    }
 }

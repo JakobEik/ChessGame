@@ -4,14 +4,25 @@ import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
 import com.example.chessgame.model.moves.Move;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BoardController {
     private final Board boardModel;
+    private boolean isWhiteTurn;
     public BoardController() {
         boardModel = new Board();
+        isWhiteTurn = true;
+    }
+
+    public boolean isWhiteTurn() {
+        return isWhiteTurn;
+    }
+
+    public void movePiece(String viewID, Move move){
+        ChessPiece piece = findCorrectPiece(viewID);
+        boardModel.movePiece(piece, move);
+        isWhiteTurn = !isWhiteTurn;
     }
 
     //For testing purposes

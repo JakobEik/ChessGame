@@ -5,7 +5,6 @@ import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface ChessPiece {
@@ -49,6 +48,6 @@ public interface ChessPiece {
     /**
      * removes the piece from the board
      */
-    void kill();
+    void die();
 
 }

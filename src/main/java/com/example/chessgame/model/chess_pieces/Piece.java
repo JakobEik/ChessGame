@@ -5,7 +5,6 @@ import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public abstract class Piece implements ChessPiece {
@@ -53,6 +52,7 @@ public abstract class Piece implements ChessPiece {
 
     @Override
     public void move(Square square){
+        this.square.killChessPiece();
         this.square = square;
         square.addChessPiece(this);
         checkMoved();
@@ -72,7 +72,7 @@ public abstract class Piece implements ChessPiece {
 
 
     @Override
-    public void kill() {
+    public void die() {
         square = null;
     }
 

@@ -1,6 +1,7 @@
 package com.example.chessgame.model.boards;
 
 
+import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.chess_pieces.*;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
@@ -12,9 +13,11 @@ public class Board {
 
     private final List<Square> squares = new ArrayList<>();
     private final List<ChessPiece> pieces = new ArrayList<>();
+    private final GameManager gameManager;
 
 
     public Board() {
+        gameManager = new GameManager();
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 int[] position = new int[]{x, y};
@@ -31,7 +34,7 @@ public class Board {
     public void emptyBoard() {
         for (Square square : squares) {
             if (square.containsPiece()) {
-                square.removeChessPiece();
+                square.killChessPiece();
             }
         }
     }
@@ -75,6 +78,12 @@ public class Board {
             int y = move.getEndPosition()[1];
 
             Square square = getSquare(x, y);
+            // Only kill of the square contains a piece of opposite color
+            if (square.containsPiece()){
+                if (piece.isWhite() != square.getPiece().isWhite()){
+                    square.killChessPiece();
+                }
+            }
             piece.move(square);
         }
 
@@ -169,7 +178,7 @@ public class Board {
         }
         // King
         else if (x == 4) {
-            return new King(square, isWhite);
+            return new King(square, isWhite, gameManager);
         } else {
             throw new IllegalArgumentException("x-position has to be between 0-7 but was" + x);
         }

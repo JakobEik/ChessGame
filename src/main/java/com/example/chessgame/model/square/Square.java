@@ -51,14 +51,12 @@ public class Square {
         containsPiece = true; // The square is now occupied
     }
 
-    public void removeChessPiece(){
-        if (piece == null){
-            throw new IllegalStateException("Cant remove piece from a square without a piece");
+    public void killChessPiece(){
+        if (piece != null){
+            piece.die();
+            containsPiece = false; // Square is no longer occupied
+            piece = null; // The square no longer contains a piece
         }
-        containsPiece = false; // Square is no longer occupied
-        ChessPiece chessPiece = piece; // Copies the piece so it can be set to null
-        piece = null; // The square no longer contains a piece
-
     }
 
 
