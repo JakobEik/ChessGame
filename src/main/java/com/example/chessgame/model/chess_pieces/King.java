@@ -47,7 +47,8 @@ public class King extends Piece implements Observable{
 
     @Override
     public void die(){
-
+        square = null;
+        notifyObservers();
     }
 
 
@@ -61,7 +62,7 @@ public class King extends Piece implements Observable{
 
     @Override
     public void notifyObservers() {
-        GameState gameState = isWhite ? GameState.WHITE_WIN : GameState.BLACK_WIN;
+        GameState gameState = isWhite ? GameState.BLACK_WIN : GameState.WHITE_WIN;
         observers.forEach(observer -> observer.update(gameState));
     }
 }

@@ -1,5 +1,6 @@
 package model.chess_pieces;
 
+import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.*;
 import com.example.chessgame.model.square.Square;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PieceTest {
-    private Board board = new Board();
+    private final Board board = new Board(new GameManager());
     private ChessPiece pawn;
     Square square;
 
@@ -31,11 +32,19 @@ class PieceTest {
     }
 
     @Test
-    void move() {
+    void wrongMove() {
         Square square = board.getSquare(3, 4);
+        Exception e = assertThrows(IllegalArgumentException.class, () -> pawn.move(square));
+        assertNotEquals(square, pawn.getSquare());
+
+
+    }
+
+    @Test
+    void rightMove(){
+        Square square = board.getSquare(2, 4);
         pawn.move(square);
         assertEquals(square, pawn.getSquare());
-
     }
 
 

@@ -14,7 +14,6 @@ public class GameManager implements Observer{
     @Override
     public void update(GameState newState) {
         gameState = newState;
-
     }
 
     public GameState getGameState() {

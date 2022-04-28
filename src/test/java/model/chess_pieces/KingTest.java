@@ -1,5 +1,6 @@
 package model.chess_pieces;
 
+import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
 import com.example.chessgame.model.chess_pieces.King;
@@ -19,11 +20,12 @@ class KingTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        GameManager gameManager = new GameManager();
+        board = new Board(gameManager);
         board.emptyBoard();
 
         Square square = board.getSquare(1, 1);
-        whiteKing = new King(square, true);
+        whiteKing = new King(square, true, gameManager);
 
 
 

@@ -1,6 +1,10 @@
 package com.example.chessgame;
 
 import com.example.chessgame.controller.boards.BoardController;
+import com.example.chessgame.controller.fileHandler.ChessFileHandler;
+import com.example.chessgame.controller.fileHandler.FileHandler;
+import com.example.chessgame.controller.gamemanager.GameManager;
+import com.example.chessgame.controller.gamemanager.GameState;
 import com.example.chessgame.model.moves.Move;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +15,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class AppController {
@@ -61,16 +68,73 @@ public class AppController {
 
     @FXML private Button moveBtn;
 
-    BoardController boardController;
+    @FXML private TextField nameField;
+    @FXML private Button saveResult;
+    @FXML private TextArea results;
+    @FXML private Button getSavedResults;
+    @FXML private Text winnerText;
+
     Map<Region, Move> regionsSelected = new HashMap<>();
     Button pieceSelected = null;
+    String winner;
+
+    FileHandler fileHandler;
+    GameManager gameManager;
+    BoardController boardController;
 
     public AppController() {
-        this.boardController = new BoardController();
+        gameManager = new GameManager();
+        boardController = new BoardController(gameManager);
+        fileHandler = new ChessFileHandler();
+    }
+
+    public void onGetSavedResultsClick() throws FileNotFoundException {
+        String savedResults = fileHandler.getAllLines();
+        results.setText(savedResults);
+    }
+
+    public void onSaveResultClick() throws IOException {
+
+        if (nameField.getText().length() > 0){
+            String lineToWrite = winner + ", Name: " + nameField.getText();
+            System.out.println(lineToWrite);
+            fileHandler.writeNewLineToFile(lineToWrite);
+            onGetSavedResultsClick();
+            saveResult.setDisable(true);
+        }
+    }
+
+
+
+    private void gameOver(String winner){
+        this.winner = winner.toUpperCase() + " WIN";
+        winnerText.setText(this.winner);
+        winnerText.setVisible(true);
+        nameField.setEditable(true);
+        saveResult.setDisable(false);
+    }
+
+    private void checkGameState(){
+        switch (gameManager.getGameState()){
+            case BLACK_WIN:
+                gameOver("black");
+                break;
+            case WHITE_WIN:
+                gameOver("white");
+        }
     }
 
     public void onRegionClick(MouseEvent event){
         Region region = (Region) event.getSource();
+        if (regionsSelected.containsKey(region)){
+
+            movePiece(region);
+        }
+    }
+
+    private void onButtonClick(Button button) {
+        int[] nodePos = getNodeGridPosition(button);
+        Region region = getRegion(nodePos[0], nodePos[1]);
         if (regionsSelected.containsKey(region)){
             movePiece(region);
         }
@@ -78,27 +142,34 @@ public class AppController {
 
 
     public void onPieceClick(ActionEvent event){
-        String playerTurn = boardController.isWhiteTurn() ? "white" : "black";
+        if (gameManager.getGameState() == GameState.ACTIVE){
+            String playerTurn = boardController.isWhiteTurn() ? "white" : "black";
+            Button button = (Button) event.getSource();
+            if (button.getId().contains(playerTurn)){
+                pieceSelected = button;
+                regionsSelected.keySet().forEach(this::removeCellAsPossibleMove);
+                regionsSelected.clear();
 
-        Button button = (Button) event.getSource();
-        if (button.getId().contains(playerTurn)){
-            pieceSelected = button;
-            regionsSelected.keySet().forEach(this::removeCellAsPossibleMove);
-            regionsSelected.clear();
+                List<Move> moves =  boardController.getPieceMoves(button.getId());
 
-            List<Move> moves =  boardController.getPieceMoves(button.getId());
+               for (Move move : moves) {
+                    final int x = move.getEndPosition()[0];
+                    final int y = move.getEndPosition()[1];
+                    regionsSelected.put(getRegion(x, y), move);
+                }
 
-           for (Move move : moves) {
-                final int x = move.getEndPosition()[0];
-                final int y = move.getEndPosition()[1];
-                regionsSelected.put(getRegion(x, y), move);
+                regionsSelected.keySet().forEach(this::setRegionAsPossibleMove);
+
             }
-
-            regionsSelected.keySet().forEach(this::setRegionAsPossibleMove);
+            else {
+                onButtonClick(button);
+            }
 
         }
 
     }
+
+
 
     private void killPiece(Region region){
         Button piece = getPiece(region);
@@ -107,14 +178,24 @@ public class AppController {
 
     private void movePiece(Region region){
         int[] regPos = getNodeGridPosition(region);
+
         if (hasPiece(region)){
             killPiece(region);
         }
+
         boardController.movePiece(pieceSelected.getId(), regionsSelected.get(region));
-        gridPane.add(pieceSelected, regPos[0], regPos[1]);
+
+        try {
+            gridPane.add(pieceSelected, regPos[0], regPos[1]);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         regionsSelected.keySet().forEach(this::removeCellAsPossibleMove);
         regionsSelected.clear();
         pieceSelected = null;
+
+        checkGameState();
     }
 
 

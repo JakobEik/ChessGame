@@ -16,8 +16,8 @@ public class Board {
     private final GameManager gameManager;
 
 
-    public Board() {
-        gameManager = new GameManager();
+    public Board(GameManager gameManager) {
+        this.gameManager = gameManager;
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 int[] position = new int[]{x, y};
@@ -143,7 +143,10 @@ public class Board {
         // Black Pieces
         else if (y == 7) {
             return initPieces(false, square, x);
-        } else {
+
+        }
+        // For debugging
+        else {
             throw new IllegalArgumentException("y-position need to be 0, 1, 6, or 7 but was: " + y);
         }
 

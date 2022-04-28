@@ -5,6 +5,7 @@ import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Piece implements ChessPiece {
@@ -52,12 +53,21 @@ public abstract class Piece implements ChessPiece {
 
     @Override
     public void move(Square square){
-        this.square.killChessPiece();
-        this.square = square;
-        square.addChessPiece(this);
-        checkMoved();
+        if (validateMoveToSquare(square)){
+            this.square.killChessPiece();
+            this.square = square;
+            square.addChessPiece(this);
+            checkMoved();
+        }
+        else {
+            // For debugging only
+            throw new IllegalArgumentException("Illegal move: " + Arrays.toString(square.getPosition()));
+        }
 
     }
+
+
+
 
     @Override
     public int getValue() {
@@ -168,6 +178,10 @@ public abstract class Piece implements ChessPiece {
         }
     }
 
-
+    private boolean validateMoveToSquare(Square square){
+        return moves
+                .stream()
+                .anyMatch(move -> Arrays.equals(move.getEndPosition(), square.getPosition()));
+    }
 
 }

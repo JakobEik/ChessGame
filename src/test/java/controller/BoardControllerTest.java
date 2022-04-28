@@ -2,10 +2,7 @@ package controller;
 
 import com.example.chessgame.controller.boards.BoardController;
 import com.example.chessgame.model.boards.Board;
-import com.example.chessgame.model.chess_pieces.Bishop;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
-import com.example.chessgame.model.chess_pieces.Pawn;
-import com.example.chessgame.model.chess_pieces.Queen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +19,7 @@ class BoardControllerTest {
 
     @BeforeEach
     void setUp(){
-        boardController = new BoardController();
+        boardController = new BoardController(null);
         board = boardController.getBoardModel();
         whitePawn1 = board.getSquare(0, 1).getPiece();
         blackQueen = board.getSquare(3, 7).getPiece();

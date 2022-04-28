@@ -1,5 +1,6 @@
 package com.example.chessgame.controller.boards;
 
+import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
 import com.example.chessgame.model.moves.Move;
@@ -10,8 +11,8 @@ import java.util.stream.Collectors;
 public class BoardController {
     private final Board boardModel;
     private boolean isWhiteTurn;
-    public BoardController() {
-        boardModel = new Board();
+    public BoardController(GameManager gameManager) {
+        boardModel = new Board(gameManager);
         isWhiteTurn = true;
     }
 

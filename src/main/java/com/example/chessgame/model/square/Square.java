@@ -44,6 +44,7 @@ public class Square {
 
     public void addChessPiece(ChessPiece piece){
         if(containsPiece){
+            // For debugging
             throw new IllegalStateException("Square is occupied");
         }
 

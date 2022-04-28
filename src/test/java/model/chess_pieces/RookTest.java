@@ -1,5 +1,6 @@
 package model.chess_pieces;
 
+import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
 import com.example.chessgame.model.chess_pieces.Pawn;
@@ -19,7 +20,7 @@ class RookTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(new GameManager());
         board.emptyBoard();
 
         Square square = board.getSquare(2, 1);
