@@ -12,19 +12,14 @@ public class ChessFileHandler implements FileHandler{
     }
 
     @Override
-    public void writeNewLineToFile(String line) throws IOException {
+    public void writeDataToFile(String data) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, true);
-        fileWriter.write(line + "\n");
+        fileWriter.write(data + "\n");
         fileWriter.close();
     }
 
     @Override
-    public String getLine(int line) {
-        return null;
-    }
-
-    @Override
-    public String getAllLines() throws FileNotFoundException{
+    public String getAllData() throws FileNotFoundException{
         Scanner scanner = new Scanner(file);
 
         StringBuilder data = new StringBuilder();

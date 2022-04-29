@@ -89,7 +89,7 @@ public class AppController {
     }
 
     public void onGetSavedResultsClick() throws FileNotFoundException {
-        String savedResults = fileHandler.getAllLines();
+        String savedResults = fileHandler.getAllData();
         results.setText(savedResults);
     }
 
@@ -98,7 +98,7 @@ public class AppController {
         if (nameField.getText().length() > 0){
             String lineToWrite = winner + ", Name: " + nameField.getText();
             System.out.println(lineToWrite);
-            fileHandler.writeNewLineToFile(lineToWrite);
+            fileHandler.writeDataToFile(lineToWrite);
             onGetSavedResultsClick();
             saveResult.setDisable(true);
         }
@@ -106,23 +106,7 @@ public class AppController {
 
 
 
-    private void gameOver(String winner){
-        this.winner = winner.toUpperCase() + " WIN";
-        winnerText.setText(this.winner);
-        winnerText.setVisible(true);
-        nameField.setEditable(true);
-        saveResult.setDisable(false);
-    }
 
-    private void checkGameState(){
-        switch (gameManager.getGameState()){
-            case BLACK_WIN:
-                gameOver("black");
-                break;
-            case WHITE_WIN:
-                gameOver("white");
-        }
-    }
 
     public void onRegionClick(MouseEvent event){
         Region region = (Region) event.getSource();
@@ -132,13 +116,7 @@ public class AppController {
         }
     }
 
-    private void onButtonClick(Button button) {
-        int[] nodePos = getNodeGridPosition(button);
-        Region region = getRegion(nodePos[0], nodePos[1]);
-        if (regionsSelected.containsKey(region)){
-            movePiece(region);
-        }
-    }
+
 
 
     public void onPieceClick(ActionEvent event){
@@ -170,10 +148,38 @@ public class AppController {
     }
 
 
+    private void onButtonClick(Button button) {
+        int[] nodePos = getNodeGridPosition(button);
+        Region region = getRegion(nodePos[0], nodePos[1]);
+        if (regionsSelected.containsKey(region)){
+            movePiece(region);
+        }
+    }
+
+    private void gameOver(String winner){
+        this.winner = winner.toUpperCase() + " WIN";
+        winnerText.setText(this.winner);
+        winnerText.setVisible(true);
+        nameField.setEditable(true);
+        saveResult.setDisable(false);
+    }
+
+    private void checkGameState(){
+        switch (gameManager.getGameState()){
+            case BLACK_WIN:
+                gameOver("black");
+                break;
+            case WHITE_WIN:
+                gameOver("white");
+        }
+    }
+
+
 
     private void killPiece(Region region){
         Button piece = getPiece(region);
         piece.setVisible(false);
+        gridPane.getChildren().remove(piece);
     }
 
     private void movePiece(Region region){
@@ -227,8 +233,7 @@ public class AppController {
     }
 
     private boolean hasPiece(Region region){
-        int[] regPos = getNodeGridPosition(region);
-        Button piece = getPiece(regPos[0], regPos[1]);
+        Button piece = getPiece(region);
         return piece != null;
     }
 

@@ -1,7 +1,7 @@
 package com.example.chessgame.model.boards;
 
 
-import com.example.chessgame.controller.gamemanager.GameManager;
+import com.example.chessgame.controller.gamemanager.Observer;
 import com.example.chessgame.model.chess_pieces.*;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
@@ -13,11 +13,11 @@ public class Board {
 
     private final List<Square> squares = new ArrayList<>();
     private final List<ChessPiece> pieces = new ArrayList<>();
-    private final GameManager gameManager;
+    private final Observer observer;
 
 
-    public Board(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public Board(Observer observer) {
+        this.observer = observer;
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 int[] position = new int[]{x, y};
@@ -181,7 +181,7 @@ public class Board {
         }
         // King
         else if (x == 4) {
-            return new King(square, isWhite, gameManager);
+            return new King(square, isWhite, observer);
         } else {
             throw new IllegalArgumentException("x-position has to be between 0-7 but was" + x);
         }

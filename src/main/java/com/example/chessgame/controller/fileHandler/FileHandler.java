@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface FileHandler {
-    void writeNewLineToFile(String line) throws IOException;
-    String getLine(int lineNumber);
-    String getAllLines() throws FileNotFoundException;
+    void writeDataToFile(String data) throws IOException;
+    String getAllData() throws FileNotFoundException;
 }
