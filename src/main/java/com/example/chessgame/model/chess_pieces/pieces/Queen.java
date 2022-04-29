@@ -1,10 +1,11 @@
-package com.example.chessgame.model.chess_pieces;
+package com.example.chessgame.model.chess_pieces.pieces;
 
 
 import com.example.chessgame.model.boards.Board;
+import com.example.chessgame.model.chess_pieces.Piece;
 import com.example.chessgame.model.square.Square;
 
-public class Queen extends Piece{
+public class Queen extends Piece {
     private static final int value = 900;
 
     public Queen(Square square, boolean isWhite) {

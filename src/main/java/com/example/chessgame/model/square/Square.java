@@ -6,22 +6,17 @@ import java.util.Arrays;
 
 public class Square {
 
-    private final int ID;
     private final int[] position;
     private boolean containsPiece = false;
     private ChessPiece piece;
 
 
-    public Square(int ID, int[] position) {
-        this.ID = ID;
+    public Square(int[] position) {
         this.position = position;
 
 
     }
 
-    public int getID() {
-        return ID;
-    }
 
     public ChessPiece getPiece() {
         return piece;
@@ -52,7 +47,7 @@ public class Square {
         containsPiece = true; // The square is now occupied
     }
 
-    public void killChessPiece(){
+    public void removeChessPiece(){
         if (piece != null){
             piece.die();
             containsPiece = false; // Square is no longer occupied

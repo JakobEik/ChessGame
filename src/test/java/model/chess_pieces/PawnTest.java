@@ -3,7 +3,7 @@ package model.chess_pieces;
 import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
-import com.example.chessgame.model.chess_pieces.Pawn;
+import com.example.chessgame.model.chess_pieces.pieces.Pawn;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,6 +63,7 @@ class PawnTest {
     void testSecondMove(){
         Square square = board.getSquare(1, 0);
         ChessPiece whitePawn = new Pawn(square, true);
+        whitePawn.getMoves(board).forEach(move -> System.out.println(move.toString()));
         Square targetSquare = board.getSquare(1,1);
         whitePawn.move(targetSquare);
 

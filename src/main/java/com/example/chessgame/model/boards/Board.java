@@ -3,6 +3,7 @@ package com.example.chessgame.model.boards;
 
 import com.example.chessgame.controller.gamemanager.Observer;
 import com.example.chessgame.model.chess_pieces.*;
+import com.example.chessgame.model.chess_pieces.pieces.*;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 
@@ -21,7 +22,7 @@ public class Board {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 int[] position = new int[]{x, y};
-                Square square = new Square(getIndex(x, y), position);
+                Square square = new Square(position);
                 if (y == 0 || y == 1 || y == 6 || y == 7) {
                     ChessPiece piece = createPiece(square);
                     pieces.add(piece);
@@ -34,7 +35,7 @@ public class Board {
     public void emptyBoard() {
         for (Square square : squares) {
             if (square.containsPiece()) {
-                square.killChessPiece();
+                square.removeChessPiece();
             }
         }
     }
@@ -67,12 +68,13 @@ public class Board {
     }
 
     /**
-     * A function that moves the piece on the board
+     * Moves a given piece on the board
      *
      * @param piece the chess piece to be moved
      * @param move  the move to be made
+     * @return True if success, false if not
      */
-    public void movePiece(ChessPiece piece, Move move) {
+    public boolean movePiece(ChessPiece piece, Move move){
         if (piece.isLegalMove(move)) {
             int x = move.getEndPosition()[0];
             int y = move.getEndPosition()[1];
@@ -81,10 +83,14 @@ public class Board {
             // Only kill of the square contains a piece of opposite color
             if (square.containsPiece()){
                 if (piece.isWhite() != square.getPiece().isWhite()){
-                    square.killChessPiece();
+                    square.removeChessPiece();
+                    pieces.remove(piece);
                 }
             }
-            piece.move(square);
+            return piece.move(square);
+        }
+        else {
+            return false;
         }
 
     }
@@ -145,8 +151,8 @@ public class Board {
             return initPieces(false, square, x);
 
         }
-        // For debugging
         else {
+            // For debugging only
             throw new IllegalArgumentException("y-position need to be 0, 1, 6, or 7 but was: " + y);
         }
 
@@ -183,6 +189,7 @@ public class Board {
         else if (x == 4) {
             return new King(square, isWhite, observer);
         } else {
+            // For debugging only
             throw new IllegalArgumentException("x-position has to be between 0-7 but was" + x);
         }
 

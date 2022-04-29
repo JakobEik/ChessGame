@@ -22,7 +22,13 @@ public interface ChessPiece {
      */
     Square getSquare();
 
-    void move(Square square);
+    /**
+     * Moves the piece to a given square
+     *
+     * @param square The square
+     * @return True if move was a success, false if not
+     */
+    boolean move(Square square);
 
     /**
      * Gets all legal moves for this piece on a given board

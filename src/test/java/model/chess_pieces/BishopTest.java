@@ -2,14 +2,15 @@ package model.chess_pieces;
 
 import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
-import com.example.chessgame.model.chess_pieces.Bishop;
+import com.example.chessgame.model.chess_pieces.pieces.Bishop;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
-import com.example.chessgame.model.chess_pieces.Pawn;
+import com.example.chessgame.model.chess_pieces.pieces.Pawn;
 import com.example.chessgame.model.chess_pieces.Piece;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import java.util.Collection;
 import java.util.List;

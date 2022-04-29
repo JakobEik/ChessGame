@@ -3,7 +3,7 @@ package model.board;
 import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
-import com.example.chessgame.model.chess_pieces.Pawn;
+import com.example.chessgame.model.chess_pieces.pieces.Pawn;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,13 +58,30 @@ class BoardTest {
         int y = move.getEndPosition()[1];
         Square targetSquare = board.getSquare(x, y);
 
-        board.movePiece(pawn, move);
+        assertTrue(board.movePiece(pawn, move));
 
         System.out.println(targetSquare.toString() +
                 " : " + pawn.getSquare().toString());
 
         assertSame(targetSquare, pawn.getSquare());
 
+    }
+
+    @Test
+    void testWrongMove(){
+        board.emptyBoard();
+        Square square = board.getSquare(1, 1);
+        ChessPiece pawn  = new Pawn(square, true);
+
+        Move move = new Move(4, 4);
+        Square targetSquare = board.getSquare(4, 4);
+
+        assertFalse(board.movePiece(pawn, move));
+
+        System.out.println(targetSquare.toString() +
+                " : " + pawn.getSquare().toString());
+
+        assertNotSame(targetSquare, pawn.getSquare());
     }
 
 

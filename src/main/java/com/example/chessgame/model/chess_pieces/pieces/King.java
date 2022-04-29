@@ -1,19 +1,21 @@
-package com.example.chessgame.model.chess_pieces;
+package com.example.chessgame.model.chess_pieces.pieces;
 
 
 import com.example.chessgame.controller.gamemanager.GameState;
 import com.example.chessgame.controller.gamemanager.Observer;
 import com.example.chessgame.model.boards.Board;
+import com.example.chessgame.model.chess_pieces.Observable;
+import com.example.chessgame.model.chess_pieces.Piece;
 import com.example.chessgame.model.square.Square;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Piece implements Observable{
+public class King extends Piece implements Observable {
 
-    private static final int value = 10000000;
+    private static final int value = 100000;
     private boolean isFirstMove;
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
     public King(Square square, boolean isWhite, Observer observer) {
         super(square, value, isWhite);

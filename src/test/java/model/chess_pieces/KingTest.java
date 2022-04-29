@@ -3,12 +3,13 @@ package model.chess_pieces;
 import com.example.chessgame.controller.gamemanager.GameManager;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
-import com.example.chessgame.model.chess_pieces.King;
-import com.example.chessgame.model.chess_pieces.Pawn;
+import com.example.chessgame.model.chess_pieces.pieces.King;
+import com.example.chessgame.model.chess_pieces.pieces.Pawn;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -54,7 +55,7 @@ class KingTest {
         HelperTestMethods.sameAmountOfMoves(moves, legalMovesWhiteKing);
         HelperTestMethods.containsLegalMoves(moves, legalMovesWhiteKing);
 
-        whiteKing.move(board.getSquare(1, 0));
+        assertTrue(whiteKing.move(board.getSquare(1, 0)));
         moves =  whiteKing.getMoves(board);
         legalMovesWhiteKing = List.of(
                 new int[]{0, 0},

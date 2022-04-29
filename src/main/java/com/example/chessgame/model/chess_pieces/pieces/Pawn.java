@@ -1,7 +1,8 @@
-package com.example.chessgame.model.chess_pieces;
+package com.example.chessgame.model.chess_pieces.pieces;
 
 
 import com.example.chessgame.model.boards.Board;
+import com.example.chessgame.model.chess_pieces.Piece;
 import com.example.chessgame.model.moves.Move;
 import com.example.chessgame.model.square.Square;
 
@@ -41,7 +42,6 @@ public class Pawn extends Piece {
         if (moveIsOnBoard(crossRight) && squareContainsOpponentPiece(board, crossRight)){
             moves.add(crossRight);
         }
-
 
 
     }

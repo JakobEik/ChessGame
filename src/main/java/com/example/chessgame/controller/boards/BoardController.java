@@ -5,6 +5,7 @@ import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.ChessPiece;
 import com.example.chessgame.model.moves.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,10 +21,25 @@ public class BoardController {
         return isWhiteTurn;
     }
 
-    public void movePiece(String viewID, Move move){
-        ChessPiece piece = findCorrectPiece(viewID);
-        boardModel.movePiece(piece, move);
-        isWhiteTurn = !isWhiteTurn;
+    /**
+     * Moves a piece in the model given a viewID from the view
+     * @param viewID The piece ID
+     * @param move The move to be made
+     * @return True if the move was made, false if not
+     */
+    public boolean movePiece(String viewID, Move move){
+        try {
+            ChessPiece piece = findCorrectPiece(viewID);
+            boolean moveSuccess = boardModel.movePiece(piece, move);
+            isWhiteTurn = !isWhiteTurn;
+            return moveSuccess;
+        }
+        catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+
     }
 
     //For testing purposes
@@ -31,18 +47,20 @@ public class BoardController {
         return boardModel;
     }
 
-    // For testing purposes
-
+    /**
+     * Returns a list of moves of the piece that matches the viewID
+     * @param viewID A string of the ID for an object in the view
+     * @return The list of possible moves
+     */
     public List<Move> getPieceMoves(String viewID){
-        ChessPiece piece = findCorrectPiece(viewID);
-        /*
-        StringBuilder moves = new StringBuilder(
-                "Position: " + Arrays.toString(piece.getSquare().getPosition()) + "\n");
-        for (Move move: piece.getMoves(boardModel)) {
-            moves.append(move.toString()).append("\n");
+        try {
+            ChessPiece piece = findCorrectPiece(viewID);
+            return piece.getMoves(boardModel);
         }
-        return moves.toString();*/
-        return piece.getMoves(boardModel);
+        catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -50,7 +68,7 @@ public class BoardController {
      * @param viewID The view ID. Example: blackRook2
      * @return A ChessPiece
      */
-    public ChessPiece findCorrectPiece(String viewID){
+    public ChessPiece findCorrectPiece(String viewID) throws IllegalArgumentException{
         List<ChessPiece> pieces = boardModel.getPieces();
 
         List<ChessPiece> singlePiece = pieces
@@ -59,7 +77,9 @@ public class BoardController {
                 .collect(Collectors.toList());
 
         //Debugging
-        if (singlePiece.size() != 1) throw new IllegalArgumentException("Something Wrong");
+        if (singlePiece.size() != 1){
+            throw new IllegalArgumentException("There should only be one piece that matches the viewID");
+        }
 
         return singlePiece.iterator().next();
     }

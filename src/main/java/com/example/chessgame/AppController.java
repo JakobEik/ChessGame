@@ -130,7 +130,7 @@ public class AppController {
 
                 List<Move> moves =  boardController.getPieceMoves(button.getId());
 
-               for (Move move : moves) {
+                for (Move move : moves) {
                     final int x = move.getEndPosition()[0];
                     final int y = move.getEndPosition()[1];
                     regionsSelected.put(getRegion(x, y), move);
@@ -189,19 +189,19 @@ public class AppController {
             killPiece(region);
         }
 
-        boardController.movePiece(pieceSelected.getId(), regionsSelected.get(region));
-
-        try {
-            gridPane.add(pieceSelected, regPos[0], regPos[1]);
+        boolean moveSuccess = boardController.movePiece(pieceSelected.getId(), regionsSelected.get(region));
+        if (moveSuccess){
+            try {
+                gridPane.add(pieceSelected, regPos[0], regPos[1]);
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            regionsSelected.keySet().forEach(this::removeCellAsPossibleMove);
+            regionsSelected.clear();
+            pieceSelected = null;
+            checkGameState();
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        regionsSelected.keySet().forEach(this::removeCellAsPossibleMove);
-        regionsSelected.clear();
-        pieceSelected = null;
-
-        checkGameState();
     }
 
 

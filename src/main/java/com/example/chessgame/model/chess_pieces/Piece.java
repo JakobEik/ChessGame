@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Piece implements ChessPiece {
 
     protected Square square;
-    protected final static List<Move> moves = new ArrayList<>();
+    protected final List<Move> moves = new ArrayList<>();
     protected final boolean isWhite;
     private final int value;
 
@@ -27,6 +27,7 @@ public abstract class Piece implements ChessPiece {
     }
 
 
+    @Override
     public int getStartX(){
         return startX;
     }
@@ -47,21 +48,25 @@ public abstract class Piece implements ChessPiece {
 
 
     @Override
-    public Square getSquare() {
+    public Square getSquare(){
         return square;
     }
 
     @Override
-    public void move(Square square){
+    public boolean move(Square square) throws IllegalArgumentException{
         if (validateMoveToSquare(square)){
-            this.square.killChessPiece();
+            this.square.removeChessPiece();
             this.square = square;
             square.addChessPiece(this);
             checkMoved();
+            return true;
         }
         else {
             // For debugging only
-            throw new IllegalArgumentException("Illegal move: " + Arrays.toString(square.getPosition()));
+            System.out.println(("Illegal move: " + Arrays.toString(square.getPosition()) +
+                    ", from square: " + Arrays.toString(this.square.getPosition()) +
+                    ", with piece: " + this.getClass().getSimpleName()));
+            return false;
         }
 
     }
@@ -86,16 +91,6 @@ public abstract class Piece implements ChessPiece {
         square = null;
     }
 
-    /**
-     * Calculates the moves for a piece on a given board
-     * @param board The board
-     */
-    protected abstract void calculateMoves(Board board);
-
-    /**
-     * Used to tell a concrete piece that it has been moved
-     */
-    protected abstract void checkMoved();
 
     /**
      * Simplifies creating a checkMoved by only needing to specify the end position
@@ -178,10 +173,29 @@ public abstract class Piece implements ChessPiece {
         }
     }
 
+    /**
+     * Validates if the piece can move to a given square
+     * @param square The square
+     * @return True if valid, false if not
+     */
     private boolean validateMoveToSquare(Square square){
         return moves
                 .stream()
                 .anyMatch(move -> Arrays.equals(move.getEndPosition(), square.getPosition()));
     }
+
+    // ########## ABSTRACT METHODS #############
+
+    /**
+     * Calculates the moves for a piece on a given board
+     * @param board The board
+     */
+    protected abstract void calculateMoves(Board board);
+
+    /**
+     * Used to tell a concrete piece that it has been moved
+     */
+    protected abstract void checkMoved();
+
 
 }
