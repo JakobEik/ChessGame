@@ -21,7 +21,7 @@ public class King extends Piece implements Observable {
         super(square, value, isWhite);
         isFirstMove = true;
         observers = new ArrayList<>();
-        observers.add(observer);
+        registerObserver(observer);
     }
 
     @Override
@@ -61,6 +61,10 @@ public class King extends Piece implements Observable {
     }
 
 
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
 
     @Override
     public void notifyObservers() {

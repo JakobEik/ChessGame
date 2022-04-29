@@ -37,6 +37,7 @@ class RookTest {
 
         Square square2 = board.getSquare(3, 1);
         ChessPiece whitePawn = new Pawn(square2, true);
+        String s = "";
 
         List<int[]> legalMoves = List.of(
                 new int[]{1, 1},
