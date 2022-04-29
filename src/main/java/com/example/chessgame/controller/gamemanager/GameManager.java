@@ -1,7 +1,6 @@
 package com.example.chessgame.controller.gamemanager;
 
-import com.example.chessgame.controller.fileHandler.ChessFileHandler;
-import com.example.chessgame.controller.fileHandler.FileHandler;
+import com.example.chessgame.model.GameState;
 
 public class GameManager implements Observer{
 

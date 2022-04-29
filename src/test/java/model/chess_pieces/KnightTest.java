@@ -33,6 +33,7 @@ class KnightTest {
 
     @Test
     void calculateMoves() {
+
         Square square = board.getSquare(0, 0);
         ChessPiece blackPawn = new Pawn(square, false);
 

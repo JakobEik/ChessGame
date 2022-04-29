@@ -1,7 +1,7 @@
 package com.example.chessgame.model.chess_pieces.pieces;
 
 
-import com.example.chessgame.controller.gamemanager.GameState;
+import com.example.chessgame.model.GameState;
 import com.example.chessgame.controller.gamemanager.Observer;
 import com.example.chessgame.model.boards.Board;
 import com.example.chessgame.model.chess_pieces.Observable;

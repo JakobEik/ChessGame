@@ -87,7 +87,8 @@ public class BoardController {
 
 
     /**
-     * Public for testing purposes
+     * Public for testing purposes, should be private
+     *
      * Creates a NameID for the piece.
      * @return A String with the NameID of this piece. Example: blackpawn1
      */

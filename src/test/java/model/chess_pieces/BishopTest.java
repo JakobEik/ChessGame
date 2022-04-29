@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class BishopTest {
     private Board board;
     private Piece whiteBishop;
@@ -25,21 +27,22 @@ class BishopTest {
         board.emptyBoard();
 
 
-        Square square1 = board.getSquare(1, 1);
-        whiteBishop = new Bishop(square1, true);
+        Square square = board.getSquare(0, 0);
+        whiteBishop = new Bishop(square, true);
+
 
 
     }
 
     @Test
     void calculateMoves() {
-        Square square2 = board.getSquare(5, 5);
-        ChessPiece blackPawn = new Pawn(square2, false);
+        Square square = board.getSquare(5, 5);
+        ChessPiece blackPawn = new Pawn(square, false);
 
 
 
-        Square square3 = board.getSquare(0, 2);
-        ChessPiece whitePawn = new Pawn(square3, true);
+        Square square2 = board.getSquare(0, 2);
+        ChessPiece whitePawn = new Pawn(square2, true);
 
         Collection<Move> moves =  whiteBishop.getMoves(board);
         List<int[]> legalMovesWhiteBishop = List.of(

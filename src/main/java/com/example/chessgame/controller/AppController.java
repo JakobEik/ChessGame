@@ -1,10 +1,10 @@
-package com.example.chessgame;
+package com.example.chessgame.controller;
 
 import com.example.chessgame.controller.boards.BoardController;
 import com.example.chessgame.controller.fileHandler.ChessFileHandler;
 import com.example.chessgame.controller.fileHandler.FileHandler;
 import com.example.chessgame.controller.gamemanager.GameManager;
-import com.example.chessgame.controller.gamemanager.GameState;
+import com.example.chessgame.model.GameState;
 import com.example.chessgame.model.moves.Move;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

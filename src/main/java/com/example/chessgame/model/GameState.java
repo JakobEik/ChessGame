@@ -1,4 +1,4 @@
-package com.example.chessgame.controller.gamemanager;
+package com.example.chessgame.model;
 
 public enum GameState {
     BLACK_WIN,
